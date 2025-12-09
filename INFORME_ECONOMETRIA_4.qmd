@@ -1,5 +1,5 @@
 ---
-title: "Impacto de los Shocks de Volatilidad Financiera (VIX) sobre la Dinámica del Precio del Petróleo Brent"
+title: "Impacto de los Shocks de Volatilidad Financiera sobre la Dinámica del Precio del Petróleo Brent: Un Enfoque VAR con Identificación de Cholesky"
 author:
   - name: "Diego Chan"
   - name: "David del Cid"
@@ -9,6 +9,8 @@ author:
 
 format:
   pdf:
+    tbl-cap-location: top
+    toc-depth: 2
     number-sections: true
     documentclass: article
     geometry:
@@ -39,9 +41,9 @@ format:
             \vskip 2.5em%
             {\large
               \begin{flushright}
-                \textbf{Diego Jeremias Chan}\\[3pt]
-                \textbf{David Alejandro del Cid}\\[3pt]
-                \textbf{Jose Carlos Monzón}\\[3pt]
+                \textbf{Diego Jeremías Chan Cux}\\[3pt]
+                \textbf{David Alejandro del Cid de León}\\[3pt]
+                \textbf{Jose Carlos Monzón Suazo}\\[3pt]
                 \textbf{Pedro Miguel Monzón Castellanos}
               \end{flushright}
               \par}%
@@ -66,13 +68,13 @@ editor: visual
 
 El precio del petróleo Brent constituye uno de los indicadores más relevantes para la economía mundial debido a su papel en la determinación de costos de producción, inflación, actividad económica, y estabilidad financiera internacional. Dado su importancia estratégica, comprender los factores que determinan su comportamiento dinámico es fundamental tanto para analistas como para responsables de política económica. Entre los determinantes más influyentes se encuentran las condiciones financieras globales, en particular los niveles de incertidumbre y aversión al riesgo que prevalecen en los mercados internacionales.
 
-En este contexto, el Índice de Volatilidad del Mercado de Opciones del S&P 500 (VIX) se ha consolidado como la principal medida de la incertidumbre financiera y del sentimiento de “miedo” de los inversionistas. Cuando el VIX aumenta, suele reflejar tensiones financieras, episodios de flight-to-quality y deterioro en las expectativas de crecimiento global. Diversos estudios señalan que estos incrementos en la volatilidad financiera pueden transmitirse a los mercados de commodities, afectando tanto los volúmenes operados como la formación de precios del petróleo, dada su estrecha relación con la actividad económica y el apetito por riesgo a nivel internacional.
+En este contexto, el VIX se ha consolidado como la principal medida de la incertidumbre financiera y del sentimiento de “miedo” de los inversionistas (Whaley, 2009). Cuando el VIX aumenta, suele reflejar tensiones financieras, episodios de fuga de capital por parte de inversionistas hacia activos de menor riesgo y deterioro en las expectativas de crecimiento global (Bekaert et al., 2013; Bloom, 2009). Diversos estudios señalan que estos incrementos en la volatilidad financiera pueden transmitirse a los mercados de commodities, afectando tanto los volúmenes de contratos negociados como la formación de precios del petróleo, dada su estrecha relación con la actividad económica y el apetito por riesgo a nivel internacional. (Kang & Ratti, 2013; Baumeister & Kilian, 2016).
 
-Eventos recientes como la crisis financiera de 2008, la crisis del petróleo de 2014–2016 o la pandemia de COVID-19 en 2020 han puesto de manifiesto esta interdependencia: incrementos abruptos del VIX coincidieron con movimientos bruscos en el precio del petróleo Brent. Esto ha motivado a la literatura a utilizar métodos de series de tiempo multivariadas —en particular modelos VAR y SVAR— para evaluar la magnitud y persistencia de los efectos de shocks financieros sobre los precios del petróleo.
+Eventos recientes como la caída del mercado petrolero de 2014–2016 y la pandemia de COVID-19 en 2020 han puesto de manifiesto la estrecha interdependencia entre incertidumbre financiera y precios energéticos. Durante la crisis petrolera de 2014–2016, las condiciones financieras y las revisiones en expectativas de riesgo contribuyeron a fuertes movimientos en los precios del petróleo (Baumeister & Kilian, 2016). Más recientemente, la pandemia elevó el VIX a niveles históricamente altos, acompañados de shocks sin precedentes en los mercados petroleros (Azar & Mzoughi, 2021; Ji et al., 2020).
 
-Con base en lo anterior, este estudio se propone analizar el impacto dinámico que tienen los shocks en la volatilidad financiera (VIX) sobre la evolución del precio del petróleo Brent. Para ello, se estima un modelo VAR bivariado con identificación estructural mediante descomposición de Cholesky, lo cual permite aislar shocks exógenos en la volatilidad financiera y estudiar la respuesta del precio del petróleo ante perturbaciones inesperadas en dicho índice.
+Con base en lo anterior, este estudio se propone analizar el impacto dinámico que tienen los shocks en la volatilidad financiera (capturada por medio del VIX) sobre la evolución del precio del petróleo Brent. Para ello, se estima un modelo VAR bivariado con identificación estructural mediante descomposición de Cholesky, lo cual permite aislar shocks exógenos en la volatilidad financiera y estudiar la respuesta del precio del petróleo ante perturbaciones inesperadas en dicho índice.
 
-La pregunta central que guía este análisis es la siguiente:
+La pregunta central que busca responder este análisis es la siguiente:
 
 ***¿En qué medida los shocks en la volatilidad financiera (VIX) afectan la dinámica del precio del petróleo Brent?***
 
@@ -84,13 +86,15 @@ Los resultados de este trabajo permiten evaluar si el VIX actúa como un determi
 
 ## Volatilidad financiera y el Índice VIX
 
-La volatilidad financiera representa el grado de incertidumbre asociada al comportamiento futuro de los mercados de activos. En particular, el Índice de Volatilidad del CBOE (VIX) se ha convertido en la medida estándar de dicha incertidumbre. El VIX se calcula a partir de los precios de opciones del S&P 500 y refleja la volatilidad implícita esperada para los próximos 30 días (Whaley, 2009). Debido a su interpretación como “índice del miedo”, incrementos en el VIX suelen asociarse con episodios de aversión al riesgo, flight-to-quality y tensiones financieras globales.
+La volatilidad financiera representa el grado de incertidumbre asociada al comportamiento futuro de los mercados de activos. En particular, el VIX se ha convertido en la medida estándar de dicha incertidumbre. El VIX se calcula a partir de los precios de opciones del S&P 500 y refleja la volatilidad implícita esperada para los próximos 30 días (Whaley, 2009). Debido a su interpretación como “índice del miedo”, incrementos en el VIX suelen asociarse con episodios de aversión al riesgo, fuga de capitales a activos de menor riesgo y tensiones financieras globales.
 
 En entornos de elevada incertidumbre, los inversionistas tienden a ajustar sus portafolios hacia activos considerados seguros, lo que puede afectar los flujos de inversión, la liquidez y los precios de commodities como el petróleo. Por ello, la literatura ha documentado que los shocks financieros, medidos a través del VIX, tienen efectos significativos sobre mercados energéticos y materias primas (Kang & Ratti, 2013; Sadorsky, 1999).
 
 ## El precio del petróleo Brent y su relación con las condiciones financieras
 
-El petróleo Brent es una referencia fundamental para el comercio internacional de crudo y constituye una variable crítica para medir expectativas de crecimiento global, costos de producción y presiones inflacionarias. Su precio no solo responde a factores de oferta y demanda, sino también a elementos financieros y especulativos. Diversos estudios destacan que el petróleo ha adquirido características de activo financiero, siendo sensible a cambios en la percepción de riesgo de los inversionistas (Hamilton, 2009; Kilian & Murphy, 2014). Durante episodios de turbulencia financiera, la caída en expectativas de crecimiento global y la reducción en la demanda por commodities pueden generar presiones a la baja en el precio del petróleo. Asimismo, el aumento del VIX se ha observado como un predictor de movimientos adversos en el mercado petrolero, especialmente en horizontes de corto plazo.
+El precio del petróleo Brent es una referencia fundamental para el comercio internacional de petróleo y constituye una variable crítica para medir expectativas de crecimiento global, costos de producción y presiones inflacionarias. Su precio no solo responde a factores de oferta y demanda, sino también a elementos financieros y especulativos. Al respecto, diversos estudios destacan que el petróleo ha adquirido características de activo financiero, siendo sensible a cambios en la percepción de riesgo de los inversionistas (Hamilton, 2009; Kilian & Murphy, 2014). 
+
+En ese sentido, periodos de incertidumbre en los mercados financieros, de caída en expectativas de crecimiento global y la reducción en la demanda por commodities pueden generar presiones a la baja en el precio del petróleo.
 
 ## Transmisión de volatilidad entre mercados financieros y de commodities
 
@@ -104,23 +108,13 @@ Estudios empíricos han mostrado que los shocks del VIX generan respuestas signi
 
 ## Modelos VAR para el análisis dinámico de relaciones entre variables
 
-Los Modelos Autorregresivos Vectoriales (VAR) son herramientas fundamentales para analizar la dinámica conjunta de un conjunto de series de tiempo. Un VAR permite capturar relaciones intertemporales y retroalimentaciones entre variables, sin imponer restricciones fuertes sobre la estructura del sistema (Sims, 1980).
+Los Modelos Autorregresivos Vectoriales (VAR) son herramientas fundamentales para analizar la dinámica conjunta de múltiples series de tiempo. Un VAR permite capturar relaciones intertemporales y retroalimentaciones entre variables, sin imponer restricciones fuertes sobre la estructura del sistema (Sims, 1980).
 
-En un VAR bivariado, cada variable se modela como función de sus rezagos y los rezagos de la otra variable, permitiendo estudiar cómo un shock en una afecta la trayectoria futura de la otra. Para responder la pregunta de investigación —cómo shocks del VIX afectan al Brent— es necesario identificar shocks estructurales, lo que requiere una descomposición adecuada del sistema.
+En un VAR bivariado, cada variable se modela como función de sus rezagos y los rezagos de la otra variable, permitiendo estudiar cómo un shock en una afecta la trayectoria futura de la otra. Para responder la pregunta de investigación: ¿En qué medida los shocks en la volatilidad financiera afectan la dinámica del precio del petróleo Brent?, es necesario identificar shocks estructurales, lo que requiere una descomposición adecuada del sistema de variables.
 
-## Identificación estructural y descomposición de Cholesky
+## Evidencia literaria sobre el efecto del VIX en el precio del petróleo
 
-La forma reducida de un VAR produce errores residuales que generalmente están correlacionados, por lo que no pueden interpretarse como shocks exógenos. Para aislar shocks estructurales se requiere una identificación adicional (Lütkepohl, 2005). Una de las técnicas más utilizadas es la descomposición de Cholesky, la cual impone una estructura triangular inferior a la matriz contemporánea de relaciones entre variables. En este estudio se adopta un orden en el cual el VIX precede al Brent, lo cual implica que:
-
--   VIX puede afectar contemporáneamente al Brent,
-
--   pero el Brent no afecta al VIX dentro del mismo periodo.
-
-Este orden es teóricamente defendible porque la volatilidad financiera, medida por el VIX, suele ser más exógena y rápida en reaccionar a eventos globales que los precios del petróleo. Trabajos similares en la literatura emplean variaciones del mismo ordenamiento para evaluar la transmisión de shocks financieros hacia commodities (Kang et al., 2015; Kilian & Murphy, 2014).
-
-## Evidencia empírica sobre el efecto del VIX en el precio del petróleo
-
-La literatura reciente coincide en que shocks en la incertidumbre financiera tienen efectos negativos y significativos sobre el precio del petróleo:
+Diversas investigaciones coinciden en que shocks en la incertidumbre financiera tienen efectos negativos y significativos sobre el precio del petróleo:
 
 -   Kang y Ratti (2013) encuentran que shocks inesperados en el VIX reducen los precios del petróleo y la actividad económica global.
 
@@ -128,38 +122,47 @@ La literatura reciente coincide en que shocks en la incertidumbre financiera tie
 
 -   Baumeister y Kilian (2016) documentan que shocks de incertidumbre explican una proporción importante de la dinámica del precio del petróleo en ciertos periodos.
 
-Estos hallazgos motivan el presente estudio, que busca evaluar si tales relaciones se mantienen cuando se analiza la respuesta dinámica del Brent ante shocks estructurales del VIX mediante un VAR con identificación de Cholesky.
+Los resultados de dichos estudios motivan el presente trabajo, el cual busca evaluar si tales relaciones se mantienen cuando se analiza la respuesta dinámica del Brent ante shocks estructurales del VIX mediante un VAR con identificación de Cholesky.
 
 # Datos y metodología
 
 ## Fuentes de datos y descripción de las series
 
-Para examinar la relación entre la volatilidad financiera y el precio del petróleo, se utilizaron dos series ampliamente reconocidas y disponibles en la base de datos FRED. Esta fuente es una de las más utilizadas en estudios macro-financieros debido a su calidad y actualización constante. Las variables seleccionadas son:
+Para examinar la relación entre la volatilidad financiera y el precio del petróleo, se utilizaron dos series ampliamente reconocidas y disponibles en la base de datos de la Federal Reserve Bank of St. Louis (FRED). Esta fuente es una de las más utilizadas en estudios macro-financieros debido a su calidad y actualización constante.
 
-1.  Índice de Volatilidad Financiera (VIX)
-    -   Código: VIXCLS Frecuencia original: diaria Medición: volatilidad implícita esperada del S&P 500 a 30 días. Relevancia: el VIX es reconocido como el principal indicador de incertidumbre financiera global (Whaley, 2009) y es comúnmente utilizado en análisis de transmisión de shocks hacia mercados petroleros (Kang & Ratti, 2013).
-2.  Precio del Petróleo Brent (spot)
-    -   Código: DCOILBRENTEU Frecuencia original: diaria Relevancia: referencia mundial del crudo y variable clave para medir condiciones energéticas globales (Hamilton, 2009).
+Las variables seleccionadas son:
 
-Ambas series se publican originalmente con frecuencia diaria, pero para efectos del análisis se convirtieron a frecuencia mensual, calculando el promedio de cada mes. Esta transformación es común porque suaviza movimientos extremadamente volátiles del día a día sin perder la tendencia principal ni la información relevante para un análisis macroeconómico (como señalan Kilian & Murphy, 2014).
+1.  **Índice de Volatilidad Financiera (VIX)**
 
-El periodo analizado va de enero de 2010 a octubre de 2025, un rango suficientemente amplio que abarca episodios clave de tensión financiera y choques en el mercado petrolero, como la crisis de 2014–2016, el impacto del COVID-19 y la recuperación posterior. Esto permite observar cómo se comportan ambas variables en diferentes contextos económicos.
+    -   Código: **VIXCLS** Frecuencia original: diaria Unidad de medida: índice de volatilidad implícita esperada del S&P 500 a 30 días.
+
+    -   Relevancia: el VIX es reconocido como el principal indicador de incertidumbre financiera global (Whaley, 2009) y es comúnmente utilizado en análisis de transmisión de shocks hacia mercados petroleros (Kang & Ratti, 2013).\
+
+2.  **Precio del Petróleo Brent (spot)**
+
+    -   Código: **DCOILBRENTEU** Frecuencia original: diaria
+
+    -   Unidad de medida: USD por barril
+
+    -   Serie disponible: Relevancia: referencia mundial del petróleo y variable clave para medir condiciones energéticas globales (Hamilton, 2009).
+
+Ambas series se publican originalmente con frecuencia diaria, pero para efectos del análisis se convirtieron a **frecuencia mensual**, calculando el promedio de cada mes. Esta transformación es común porque suaviza movimientos extremadamente volátiles del día a día sin perder la tendencia principal ni la información relevante para un análisis macroeconómico (Kilian & Murphy, 2014).
+
+El periodo analizado comprende de **enero de 2010 a octubre de 2025**, un rango que abarca sucesos de tensión financiera y choques en el mercado petrolero, como la crisis de 2014–2016, el impacto del COVID-19 y la recuperación posterior. Esto permite observar cómo se comportan ambas variables en diferentes contextos económicos.
 
 ## Transformación de las variables y estacionariedad
 
-Las dos series presentan comportamientos característicos de las variables financieras y de commodities: son altamente volátiles y no estacionarias en niveles. Esto coincide con lo reportado por trabajos como Elder y Serletis (2010) y Baumeister y Kilian (2016). Por ello, en este estudio se transformaron mediante primeras diferencias simples, obteniendo:
+Las dos series presentan comportamientos característicos de las variables financieras y de commodities: son altamente volátiles y no estacionarias en niveles. Esto coincide con lo documentado en estudios como Elder y Serletis (2010) y Baumeister y Kilian (2016), quienes señalan que estas series suelen ser integradas de orden uno y requieren transformaciones adecuadas antes de ser utilizadas en modelos VAR.
+
+Con este propósito, en el presente estudio ambas variables fueron transformadas mediante **primeras diferencias simples**, lo que permite eliminar tendencia, estabilizar la varianza y asegurar la estacionariedad. Además, se destaca la preferencia de esta transformación frente al uso de logaritmos, dado que facilita la interpretación económica: ∆VIX expresa cambios absolutos en puntos del índice, mientras que ΔBrent refleja variaciones en dólares por barril, lo cual permite analizar de manera directa y clara los efectos dinámicos identificados posteriormente en el modelo. En este sentido, las transformaciones utilizadas fueron:
 
 $$
-    \Delta VIX_t =VIX_t-VIX_{T-1}
-$$ $$
-    \Delta Brentt =Brent_t-Brent_{T-1}
+    \Delta VIX_t =VIX_t-VIX_{t-1}
 $$
 
-Esta elección tiene varias justificaciones: Razones estadísticas: El VIX y el Brent suelen ser series integradas de orden uno (I(1)). Aplicar primeras diferencias es una práctica estándar para eliminar tendencia y estabilizar la varianza.
-
-Evitar el uso de logaritmos: El VIX puede tomar valores relativamente bajos, lo que hace menos conveniente usar transformaciones logarítmicas. Elder y Serletis (2010) recomiendan diferencias simples en estos casos.
-
-Interpretación clara: Trabajar con diferencias simples facilita interpretar los resultados en unidades económicas directas.
+$$
+    \Delta Brentt =Brent_t-Brent_{t-1}
+$$
 
 -   $\Delta VIX$ se interpreta como un cambio absoluto en puntos del índice.
 
@@ -169,13 +172,9 @@ Interpretación clara: Trabajar con diferencias simples facilita interpretar los
 
     -   En adelante sera escrito como $DBrent$
 
-Consistencia con estudios previos: Investigaciones previas que analizan las interacciones entre incertidumbre financiera y mercados energéticos también emplean transformaciones similares.
-
-Las pruebas de raíz unitaria confirmaron que ambas series en diferencias son estacionarias, por lo que están listas para ser utilizadas en el modelo VAR.
-
 ## Especificación del modelo VAR
 
-Para analizar cómo se influyen mutuamente la volatilidad financiera y el precio del petróleo a lo largo del tiempo, se estimó un Modelo Autorregresivo Vectorial (VAR) bivariado. Este enfoque, propuesto por Sims (1980), es ideal cuando se desea estudiar interrelaciones dinámicas sin imponer restricciones estructurales muy fuertes desde el inicio. La forma reducida del VAR(p) se expresa como:
+Para analizar cómo se influyen mutuamente la volatilidad financiera y el precio del petróleo a lo largo del tiempo, se estimó un **Modelo Autorregresivo Vectorial (VAR)** bivariado. Este enfoque, propuesto por Sims (1980), es ideal cuando se desea estudiar interrelaciones dinámicas sin imponer restricciones estructurales muy fuertes desde el inicio.
 
 donde la forma estructural es:
 
@@ -185,38 +184,61 @@ $$
 
 $$ DBrent_{t} = b_{20}-b_{21}DVIX_t +\gamma_{21} DBrent_{t-1} +  \gamma_{22} DBrent_{t-2}\;+\;...\;+\;\gamma_{2p} DBrent_{t-p}+\epsilon_{2t}    $$
 
-con su forma reducida:
+En su forma matricial:
 
 $$
-\begin{pmatrix}1 & b_{12}\\ b_{21} & 1 \end{pmatrix} \begin{pmatrix} DVIX_{t} \\ DBrent_{t} \end{pmatrix} = \begin{pmatrix}b_{10} \\ b_{20}  \end{pmatrix} + \begin{pmatrix}\gamma_{11} & \gamma_{12}&...&\gamma_{1p}\\ \gamma_{21} & \gamma_{22}&...&\gamma_{2
-p} \end{pmatrix} 
+\begin{pmatrix}1 & b_{12} \\b_{21} & 1\end{pmatrix}\begin{pmatrix}\Delta VIX_t \\\Delta Brent_t\end{pmatrix}=\begin{pmatrix}b_{10} \\b_{20}\end{pmatrix}+\begin{pmatrix}\gamma_{11} & \gamma_{12} \\\gamma_{21} & \gamma_{22}\end{pmatrix}\begin{pmatrix}\Delta VIX_{t-1} \\\Delta Brent_{t-1}\end{pmatrix}+\begin{pmatrix}\gamma_{11} & \gamma_{12} \\\gamma_{21} & \gamma_{22}\end{pmatrix}\begin{pmatrix}\Delta VIX_{t-2} \\\Delta Brent_{t-2}\end{pmatrix}+\begin{pmatrix}\epsilon_{1t} \\\epsilon_{2t}\end{pmatrix}
 $$
 
-Las matrices contienen los coeficientes de rezago que reflejan cómo cada variable depende de su propia historia y de la historia de la otra. El vector c recoge constantes y términos determinísticos, y representa los errores de la forma reducida.
+En su forma reducida:
 
-# Selección del número de rezagos
+$$
+B Y_t =\Gamma_{0}+\Gamma_{1}Y_{t-1} +\Gamma_{2}Y_{t-2}+ \epsilon_t
+$$ $$
+Y_t =B^{-1}\Gamma_{0}+B^{-1}\Gamma_{1}Y_{t-1} +B^{-1}\Gamma_{2}Y_{t-2}+ B^{-1}\epsilon_t
+$$ $$
+Y_t =A_{0}+A_{1}Y_{t-1} +A_{2}Y_{t-2}+ e_t
+$$ donde:
 
-El número óptimo de rezagos se determinó mediante criterios de información como AIC, BIC y HQ, siguiendo las recomendaciones de Lütkepohl (2005).
+$$
+Y_t = \begin{pmatrix}  \text{DVIX}_t \\ \text{DBrent}_t \end{pmatrix}, \quad e_t = \begin{pmatrix} e_{1t} \\ e_{2t} \end{pmatrix}, \quad 
+$$
 
-Estos criterios buscan un equilibrio entre explicar bien la dinámica de las series y evitar modelos innecesariamente complejos.
+Las matrices $A_i$ contienen los coeficientes de rezago que reflejan cómo cada variable depende de su propio rezago y de los rezagos de las demás variables. El vector $c$ incluye términos constantes y términos determinísticos, y $e_t$ representa los errores de la forma reducida.
 
-El VAR estimado cumple con las condiciones básicas:
-
--   Ausencia de autocorrelación en los residuos,
-
--   Estabilidad del sistema,
-
--   Parsimonia.
-
-El resultado es el siguiente.
-
-Por lo que la nueva forma estructural es la siguiente
+La forma que utilizaremos para ajustar es la siguiente: $$
+DVIX_{t} = a_{10} + a_{11} DVIX_{t-1}+ a_{12} DBrent_{t-1} + a_{13} DVIX_{t-2}+ a_{14} DBrent_{t-2} + e_{1t}
+$$ $$
+DBrent_{t} = a_{20} + a_{21} DVIX_{t-1}+ a_{22} DBrent_{t-1} + a_{23} DVIX_{t-2}+ a_{24} DBrent_{t-2} + e_{2t}
+$$
 
 ## Identificación estructural mediante descomposición de Cholesky
 
-Los errores de la forma reducida ​ están correlacionados contemporáneamente, por lo que no pueden interpretarse directamente como shocks exógenos. Para obtener shocks estructurales, se requiere una descomposición adicional del sistema.
+Los errores de la forma reducida $e_t$ están correlacionados contemporáneamente, por lo que no pueden interpretarse directamente como shocks exógenos. Para obtener **shocks estructurales**, se utilizó la **descomposición de Cholesky**, la cual impone una estructura triangular inferior sobre la matriz contemporánea de relaciones entre variables:
 
-Se utiliza la descomposición de Cholesky, la cual impone una estructura triangular inferior sobre la matriz contemporánea de relaciones entre variables:
+El orden de Cholesky elegido es:
+
+$$
+\Delta \text{VIX}_t \longrightarrow \Delta \text{Brent}_t
+$$
+
+Para la identificación estructural del modelo se adoptó un ordenamiento de Cholesky en el cual el VIX aparece primero y el precio del petróleo Brent en segundo lugar. Este orden supone que los shocks de volatilidad financiera pueden afectar contemporáneamente las variaciones del precio del petróleo, pero no a la inversa: el Brent no influye sobre el VIX dentro del mismo mes, aunque sí puede hacerlo con rezago. Restricciones:
+
+$$
+B = \begin{pmatrix}1 & 0 \\b_{21} & 1\end{pmatrix}
+$$
+
+Para recuperar la forma estructural se utilizara:
+
+$$
+B^{-1} = \frac{1}{1} \begin{pmatrix}1 & 0 \\-b_{21} & 1\end{pmatrix}
+$$
+
+Se aplicara al error reducido:
+
+$$
+e_t = B^{-1} \epsilon_t,
+$$
 
 donde:
 
@@ -224,63 +246,59 @@ donde:
 
 -   $\epsilon_t$ ​es el vector de shocks estructurales.
 
-El orden de Cholesky elegido es:
-
-Este ordenamiento supone que:
-
-1.  Los shocks en la volatilidad financiera sí pueden afectar contemporáneamente los cambios en el precio del petróleo.
-2.  El Brent no afecta al VIX dentro del mismo mes, aunque sí puede influir en periodos siguientes.
-
-Esta estructura no es arbitraria:
-
--   El VIX es un indicador de incertidumbre que reacciona prácticamente al instante a noticias globales (Whaley, 2009).
-
--   El petróleo, aunque importante, ajusta su precio con rezagos respecto a las condiciones financieras (Hamilton, 2009).
-
--   Estudios como Kang y Ratti (2013) emplean un orden similar para analizar cómo shocks financieros se transmiten al mercado energético.
-
-Por estas razones, colocar al VIX primero es teórica y empíricamente consistente.
+Esta estructura se fundamenta tanto en consideraciones teóricas económicas-financieras. El VIX es reconocido como un indicador que resume las expectativas inmediatas de incertidumbre financiera y reacciona prácticamente al instante ante cambios en las condiciones económicas globales (Whaley, 2009). Por el contrario, los precios del petróleo suelen ajustarse con cierto desfase, ya que incorporan gradualmente información sobre demanda, condiciones financieras y shocks macroeconómicos (Hamilton, 2009).
 
 ## Análisis dinámico: IRF y FEVD
 
 Una vez estimado y correctamente identificado el modelo, se aplican dos herramientas esenciales para responder la pregunta de investigación:
 
-1.  Funciones de Impulso-Respuesta (IRF) Permiten observar cómo reacciona el precio del petróleo ante un shock inesperado en la volatilidad financiera. En otras palabras, muestran la “trayectoria” que sigue el Brent después de un aumento inesperado en el VIX.
-2.  Descomposición de Varianza del Error de Pronóstico (FEVD) Indica qué proporción de la variabilidad futura del Brent se debe a shocks en el VIX. Esta medida ayuda a cuantificar cuánta importancia tiene realmente la volatilidad financiera en la dinámica del precio del petróleo.
+1.  **Funciones de Impulso-Respuesta (IRF)\
+    **Permiten observar cómo reacciona el precio del petróleo ante un shock inesperado en la volatilidad financiera, es decir, muestran la trayectoria que sigue el Brent después de un aumento inesperado en el VIX.
 
-Ambas herramientas son ampliamente utilizadas en estudios de transmisión de incertidumbre entre mercados (Elder & Serletis, 2010; Kilian & Murphy, 2014).
+2.  **Descomposición de Varianza del Error de Pronóstico (FEVD)**Indica qué proporción de la variabilidad futura del Brent se debe a shocks en el VIX. Esta medida ayuda a cuantificar cuánta importancia tiene realmente la volatilidad financiera en la dinámica del precio del petróleo.
 
 ## Pruebas de diagnóstico del VAR
 
 Antes de interpretar los resultados, se aplican pruebas estándar para validar el VAR estimado:
 
--   Estabilidad del sistema mediante raíces del polinomio característico.
+-   **Estabilidad del sistema** mediante raíces del polinomio característico.
 
--   Autocorrelación de residuos usando pruebas LM.
+-   **Autocorrelación de residuos** usando prueba LM (Breusch-Godfrey).
 
--   Normalidad multivariada mediante test de Jarque–Bera.
+-   **Normalidad multivariada** mediante test de Jarque–Bera.
 
--   Heterocedasticidad mediante pruebas ARCH o White, especialmente relevantes en series financieras.
+-   **Heterocedasticidad** mediante prueba White con términos cruzados
 
-Aun cuando los residuos financieros no siempre son perfectamente normales, situación habitual en estudios de volatilidad, la literatura señala que mientras el VAR sea estable y no presente autocorrelación, las IRF y las FEVD siguen siendo interpretables y útiles (Lütkepohl, 2005).
+# RESULTADOS
 
-# RESULTADOS EMPÍRICOS
+Esta sección presenta los principales hallazgos derivados de la estimación de un modelo VAR(2) que examina la interacción entre las variaciones del índice de volatilidad financiera (∆VIX) y las variaciones del precio del petróleo Brent (∆Brent). Se evalúan los supuestos del modelo, su estabilidad, la relación dinámica entre las variables y los efectos de los shocks estructurales usando funciones de impulso-respuesta (IRF) y descomposición de varianza (FEVD). El propósito es determinar en qué medida la volatilidad financiera influye en la dinámica del petróleo.
 
-Esta sección presenta los principales hallazgos empíricos derivados de la estimación de un modelo VAR(2) que examina la interacción entre las variaciones del índice de volatilidad financiera (∆VIX) y las variaciones del precio del petróleo Brent (∆Brent). Se evalúan los supuestos del modelo, su estabilidad, la relación dinámica entre las variables y los efectos de los shocks estructurales usando funciones de impulso-respuesta (IRF) y descomposición de varianza (FEVD). El propósito es determinar en qué medida la volatilidad financiera influye en la dinámica del petróleo, siguiendo prácticas metodológicas ampliamente utilizadas en la literatura (Kilian & Lütkepohl, 2017).
+## Selección del modelo y del número de rezagos
 
-## Selección del modelo y evaluación inicial
+La selección del número de rezagos del modelo se realizó utilizando los criterios de información AIC, SC y HQ. Aunque el criterio de Schwarz penaliza de manera más estricta la complejidad del modelo y suele preferirse en aplicaciones donde se prioriza la parsimonia, en este estudio se optó por utilizar el criterio AIC como criterio principal para la elección del rezago óptimo. El AIC sugirió la especificación VAR(2), que, si bien incorpora un rezago adicional respecto al modelo más parsimonioso sugerido por Schwarz, permite capturar de mejor manera la estructura dinámica de las series y las interacciones de corto plazo entre la volatilidad financiera y el precio del petróleo.
 
-Los criterios de información (AIC, SC y HQ) sugirieron un VAR con dos rezagos, consistente con la dinámica de series financieras y de commodities, cuyos ajustes ocurren de forma rápida pero no instantánea (Sims, 1980; Kilian & Murphy, 2014).
+Además, al contar con un tamaño de muestra suficientemente grande (180 observaciones), se dispone de suficientes grados de libertad para estimar un VAR(2). Asimismo, dado que el objetivo del estudio no es realizar pronósticos sino analizar la transmisión dinámica de shocks estructurales, resulta preferible priorizar un modelo que represente adecuadamente la relación económica entre las variables antes que uno estrictamente parsimonioso.
 
-Aunque la prueba de causalidad de Granger no mostró evidencia concluyente de que ∆VIX prediga a ∆Brent ni viceversa, esto no invalida el análisis estructural. La literatura señala que la causalidad de Granger prueba predicción, pero no mide cómo reacciona una variable ante un shock estructural, que es justamente el foco de los modelos SVAR (Lütkepohl, 2005).
+Cabe mencionar que la elección de dos rezagos es consistente con la dinámica de series financieras y de commodities, cuyos ajustes ocurren de forma rápida pero no instantánea (Sims, 1980; Kilian & Murphy, 2014).
 
-| LAG | AIC |  SC | HQ  |
-|-----|:----|----:|:---:|
-| 12  | 12  |  12 | 12  |
-| 123 | 123 | 123 | 123 |
-| 1   | 1   |   1 |  1  |
-| 1   | 1   |   1 |  1  |
-| 1   | 1   |   1 |  1  |
+| LAG | AIC      |      SC |   HQ    |
+|-----|---------|--------|-------|
+| 0   | 12.28    |   12.31 |  12.29  |
+| 1   | 12.20    | 12.31\* |  12.25  |
+| 2   | 12.17 \* |   12.34 | 12.25\* |
+| 3   | 12.19    |   12.43 |  12.29  |
+| 4   | 12.19    |   12.50 |  12.32  |
+| 5   | 12.20    |   12.57 |  12.35  |
+| 6   | 12.21    |   12.65 |  12.39  |
+| 7   | 12.23    |   12.75 |  12.45  |
+| 8   | 12.27    |   12.85 |  12.51  |
+
+: Elaboración propia, Análisis de criterios de información {#tbl-datos}
+
+|                Especificación                |
+|--------------------------------------------|
+|        \* Criterio de información AIC        |
+| indica que podemos utilizar un modelo VAR(2) |
 
 ## Verificación de supuestos del modelo
 
@@ -288,111 +306,153 @@ Antes de analizar los efectos dinámicos entre las variables, se revisó si el V
 
 ### Estabilidad del modelo
 
-El gráfico de las raíces inversas del polinomio característico muestra que todas las raíces se encuentran dentro del círculo unitario, lo que confirma que el VAR es estable.
+El gráfico de las raíces inversas del polinomio característico muestra que ***todas las raíces se encuentran dentro del círculo unitario***, lo que confirma que el VAR es estable.
 
-La estabilidad es un requisito crítico, ya que garantiza que los efectos dinámicos derivados del modelo, especialmente las funciones de impulso-respuesta, convergen y pueden interpretarse de manera económica válida (Kilian & Lütkepohl, 2017). Un VAR inestable generaría trayectorias explosivas y resultados estructurales no confiables, por lo que este primer resultado respalda la coherencia interna del modelo.
+La estabilidad es un requisito fundamental, ya que garantiza que los efectos dinámicos derivados del modelo, especialmente las funciones de impulso-respuesta, convergen y pueden interpretarse de manera económica válida (Kilian & Lütkepohl, 2017). Un VAR inestable generaría trayectorias explosivas y resultados estructurales no confiables, por lo que este primer resultado respalda la coherencia interna del modelo.
 
-### Autocorrelación de los residuos (Pruebas LM)
+![Elaboración propia, raices unitarias inversas](images/clipboard-631163122.png){#fig-mi-imagen width="60%" height="200px"}
+
+### Autocorrelación de los residuos (Prueba LM - Breusch-Godfrey)
 
 La prueba LM de autocorrelación residual, realizada para rezagos del 1 al 12, no rechaza la hipótesis nula de ausencia de autocorrelación en ningún caso (p-values \> 0.10).
 
 Esto significa que los residuos del VAR no presentan patrones sistemáticos de dependencia temporal, lo que implica que:
 
--   el número de rezagos elegido (p = 2) es adecuado,
+-   El número de rezagos elegido (p = 2) es adecuado, por lo que no es necesario añadir rezagos adicionales.
+-   El modelo captura correctamente la dinámica conjunta de las series.
 
--   el modelo captura correctamente la dinámica conjunta de las series,
+La ausencia de autocorrelación es uno de los criterios centrales para validar un VAR, pues garantiza que los residuos se comportan como innovaciones (Lütkepohl, 2005)
 
--   no es necesario añadir rezagos adicionales.
+| LAG | Correlacion |      df |     prob      |
+|-----|:------------|--------:|:-------------:|
+| 1   | 4.6067      | (4,364) | 0.3301 \*\*\* |
+| 2   | 5.5388      | (4,364) | 0.2363 \*\*\* |
+| 3   | 2.7200      | (4,364) | 0.6057 \*\*\* |
+| 4   | 1.0874      | (4,364) |   0.0247 \*   |
+| 5   | 5.3664      | (4,364) | 0.2517 \*\*\* |
+| 6   | 1.0376      | (4,364) | 0.9040 \*\*\* |
+| 7   | 2.2982      | (4,364) | 0.6811 \*\*\* |
+| 8   | 1.0874      | (4,364) | 0.8963 \*\*\* |
+| 9   | 3.0631      | (4,364) | 0.5473 \*\*\* |
+| 10  | 3.4981      | (4,364) | 0.4782 \*\*\* |
+| 11  | 5.4628      | (4,364) | 0.2430 \*\*\* |
+| 12  | 1.4932      | (4,364) | 0.8278 \*\*\* |
 
-La ausencia de autocorrelación es uno de los criterios centrales para validar un VAR, pues garantiza que los residuos se comportan como innovaciones (Lütkepohl, 2005).
+: Elaboración propia, Prueba LM - Breusch-Godfrey {#tbl-datos}
 
-| LAG | AIC |  df | prob |
-|-----|:----|----:|:----:|
-| 12  | 12  |  12 |  12  |
-| 123 | 123 | 123 | 123  |
-| 1   | 1   |   1 |  1   |
-| 1   | 1   |   1 |  1   |
-| 1   | 1   |   1 |  1   |
-
-tabla:
-
-| LAG | AIC |  df | prob |
-|-----|:----|----:|:----:|
-| 12  | 12  |  12 |  12  |
-| 123 | 123 | 123 | 123  |
-| 1   | 1   |   1 |  1   |
-| 1   | 1   |   1 |  1   |
-| 1   | 1   |   1 |  1   |
+|                Especificación                |
+|:--------------------------------------------:|
+| \*\*\* NO se rechaza al 10% de significancia |
+|  \*\* NO se rechaza al 5% de significancia   |
+|   \* NO se rechaza al 1% de significancia    |
 
 ### Normalidad y heterocedasticidad
 
-Las pruebas de normalidad multivariada (Jarque–Bera) muestran que los residuos no siguen una distribución normal, principalmente debido a colas gruesas y valores extremos propios de datos financieros. Asimismo, la prueba de heterocedasticidad indica la presencia de varianza no constante. Estos resultados son comunes en series financieras como el VIX o los precios del petróleo, que suelen presentar cambios abruptos en volatilidad (Elder & Serletis, 2010). No obstante, la literatura señala que los modelos VAR estructurales mantienen validez interpretativa incluso cuando los residuos se desvían de la normalidad, siempre que: el modelo sea estable, y los residuos no presenten autocorrelación.
+Las pruebas de normalidad multivariada (Jarque–Bera) muestran que los residuos no siguen una distribución normal, principalmente debido a colas gruesas y valores extremos, cuyas características son usuales en los datos financieros (Elder & Serletis, 2010). Asimismo, la prueba de heterocedasticidad indica la presencia de varianza no constante.
 
-Ambas condiciones se cumplen en este caso, por lo que el análisis estructural del VAR sigue siendo apropiado.
+No obstante, la literatura señala que los modelos VAR estructurales mantienen validez interpretativa incluso cuando los residuos se desvían de la normalidad, siempre que:
+
+1.  El modelo sea estable.
+2.  Los residuos no presenten autocorrelación.
+
+Al respecto, Kilian y Lütkepohl (2017)  en su documento Structural Vector Autoregressive Analysis, indican que la normalidad de los errores no es un requisito para la validez del VAR ni para la interpretación económica de los shocks estructurales, siempre que el modelo esté correctamente especificado y los residuos no exhiban autocorrelación.
+
+Se comprobaron las siguientes hipótesis:
+
+$$
+H_0 = {Normalidad} 
+ \quad vs \quad
+H_1 = {No\ normalidad}
+$$ $$
+JB = n \left[ \frac{S^2}{6} + \frac{(c-3)^2}{24} \right]
+$$
+
+| Componente | Jarque-Bera |  df |  prob  |
+|------------|:------------|----:|:------:|
+| 1          | 7421.670    |   2 | 0.0000 |
+| 2          | 12.658512   |   2 | 0.0018 |
+
+: Elaboración propia, Prueba de Jarque-Bera {#tbl-datos}
+
+|                    Especificación                     |
+|:-----------------------------------------------------:|
+| Se rechaza $H_0$ a todos los niveles de significancia |
+
+Se comprobaron las siguientes hipótesis:
+
+$$
+H_0 = {Homocedasticidad} \quad
+vs \quad
+H_1 = {Heteroscedasticidad}
+$$
+
+| Chi-Cuadrado |  df |  prob  |
+|--------------|----:|:------:|
+| 155.2153     |  42 | 0.0000 |
+
+: Elaboración propia, Prueba de Heteroscedasticidad {#tbl-datos}
+
+|                    Especificación                     |
+|:-----------------------------------------------------:|
+| Se rechaza $H_0$ a todos los niveles de significancia |
 
 ### Análisis visual de los residuos
 
-Se examinaron las series temporales de los residuos de ∆VIX y ∆Brent. Ambos gráficos muestran fluctuaciones alrededor de cero sin tendencias deterministas ni patrones de persistencia visibles. Aunque se observan picos aislados —particularmente asociados a episodios de tensión financiera o shocks energéticos— no se aprecia estructura temporal significativa.
+Se examinaron las series temporales de los residuos de ∆VIX y ∆Brent. Ambos gráficos muestran fluctuaciones alrededor de cero sin tendencias deterministas ni patrones de persistencia visibles. Aunque se observan picos aislados, este comportamiento visual es consistente con el supuesto de innovaciones que se comportan como ruido blanco, lo cual respalda el uso del VAR para interpretar shocks en ambas variables.
 
-Este comportamiento visual es consistente con el supuesto de innovaciones aproximadamente ruido blanco, lo cual respalda el uso del VAR para interpretar shocks en ambas variables.
+![Elaboración propia, series de tiempo indice VIX y petróleo Brentcon. Datos tomados de (FRED).](images/clipboard-4042406327.png){width="250" height="300"}
 
-Interpretación: La ausencia de patrones visibles en los residuos indica que el VAR ha capturado adecuadamente la dinámica sistemática de las series. Lo que queda en los residuos parece ser ruido aleatorio, como exige el modelo.
+**Interpretación:** La ausencia de patrones visibles en los residuos indica que el VAR ha capturado adecuadamente la dinámica sistemática de las series. Lo que queda en los residuos parece ser ruido aleatorio, como exige el modelo.modelo.
 
 ### Correlogramas de residuos (ACF y PACF)
 
-Los correlogramas de autocorrelación (ACF) y autocorrelación parcial (PACF), tanto para ∆VIX como para ∆Brent, muestran que prácticamente todos los coeficientes caen dentro de las bandas de confianza del 95%.
+Los correlogramas de autocorrelación (ACF) y autocorrelación parcial (PACF), tanto para $\Delta VIX$como para $\Delta Brent$, muestran que prácticamente todos los coeficientes caen dentro de las bandas de confianza del 95%.
 
-Esto confirma visualmente la evidencia formal obtenida con las pruebas LM: los residuos no presentan autocorrelación significativa. Este comportamiento es deseable en un VAR, ya que implica que:
-
--   no queda información temporal sin modelar,
-
--   el VAR con dos rezagos es suficiente,
-
--   los shocks estructurales identificados a través de Cholesky pueden interpretarse adecuadamente.
+Esto confirma de manera visual la evidencia formal obtenida con la prueba de autocorrelación LM, es decir que **los residuos no presentan autocorrelación significativa**.
 
 Como señalan Kilian y Lütkepohl (2017), los correlogramas residuales son una herramienta esencial para validar que la estructura dinámica del VAR está correctamente especificada.
 
+![Elaboración propia, Correlograma de los residuos.](images/correlograma.png){width="300" height="300"}
+
 # Conclusión de la verificación de supuestos
 
-Los análisis formales y gráficos permiten concluir que el VAR(2) estimado cumple con los supuestos esenciales para la interpretación económica y estadística de los resultados: Es estable Los residuos no presentan autocorrelación La heterocedasticidad y no normalidad observadas son tratables y esperadas en series financieras Los residuos se comportan de manera visualmente aleatoria.
+Los análisis formales y gráficos permiten concluir que el VAR(2) estimado cumple con los supuestos esenciales para la interpretación económica y estadística de los resultados:
 
-Con esto, el modelo se considera adecuado para examinar la dinámica entre la volatilidad financiera y el precio del petróleo, y sus funciones de impulso-respuesta y descomposición de varianza pueden interpretarse con confianza.
+-   **Es estable**
+
+-   **Los residuos no presentan autocorrelación**
+
+-   **La heterocedasticidad y no normalidad observadas son tratables y esperadas en series financieras**
+
+-   **Los residuos se comportan de manera similar a un ruido blanco**
+
+Con esto, el modelo se considera adecuado para examinar la dinámica entre la volatilidad financiera y el precio del petróleo, por lo que las funciones de impulso-respuesta y la descomposición de varianza pueden interpretarse de manera confiable.
 
 ## Análisis de Impulso-Respuesta (IRF)
 
-Las IRF permiten observar cómo reacciona cada variable ante un shock inesperado en la otra. Estos gráficos son fundamentales para responder la pregunta de investigación: ¿En qué medida los shocks en la volatilidad financiera (VIX) afectan la dinámica del precio del petróleo Brent?
+Las IRF permiten observar cómo reacciona cada variable ante un shock inesperado en la otra. Estos gráficos son fundamentales para responder la pregunta de investigación: ¿En qué medida los shocks en la volatilidad financiera afectan la dinámica del precio del petróleo Brent?
 
 ### Impacto de un shock en ∆VIX sobre ∆Brent
 
 El resultado más importante se observa en la respuesta del petróleo ante un shock positivo en ∆VIX (“Response of D1OIL to D1VIX Innovation”).
 
+![Elaboración propia, Función impulso respuesta (IRF).](images/irf.png){width="300px" height="300px"}
+
 Los hallazgos indican que:
 
--   En el primer mes, un shock en ∆VIX genera una caída significativa en ∆Brent de aproximadamente –2 dólares por barril.
+-   De forma inmediata, un shock en ∆VIX genera una caída significativa en ∆Brent de aproximadamente **2 USD por barril**.
 
--   En el segundo mes, el efecto sigue siendo negativo (≈ –1.3 dólares) y continúa siendo significativo. A partir del tercer mes, la respuesta converge a cero rápidamente y pierde significancia.
+-   En el siguiente mes, el efecto sigue siendo negativo (≈ **–1.3 USD por barril**) y continúa siendo significativo hasta el segundo mes, a partir del cual pierde significancia, convergiendo a cero rápidamente.
 
 Este patrón muestra que:
 
-**Aumentos inesperados en la volatilidad financiera producen un impacto negativo, significativo pero transitorio, en el precio del petróleo Brent**.
+**Aumentos inesperados en la volatilidad financiera producen un impacto negativo, significativo pero transitorio, en el precio del petróleo Brent.**
 
-Este resultado coincide con estudios que concluyen que shocks de incertidumbre financiera tienden a generar presiones bajistas temporales en los mercados petroleros (Kang & Ratti, 2013; Baumeister & Kilian, 2016), así como con modelos teóricos donde un aumento de incertidumbre reduce expectativas de actividad económica y demanda futura de petróleo (Hamilton, 2009).
+Este resultado coincide con estudios que concluyen que shocks de incertidumbre financiera tienden a generar presiones a la baja y temporales en los mercados petroleros (Kang & Ratti, 2013; Baumeister & Kilian, 2016), así como con modelos teóricos donde un aumento de incertidumbre reduce expectativas de actividad económica y demanda futura de petróleo (Hamilton, 2009).
 
 ### Efecto de un shock en ∆Brent sobre ∆VIX
 
-El panel correspondiente muestra que los shocks en el precio del petróleo:
-
--   generan una reacción casi nula en ∆VIX,
-
--   con bandas de confianza que incluyen cero desde el primer periodo.
-
-Esto sugiere que:
-
-Las variaciones inesperadas del petróleo no modifican de manera sustancial la percepción de riesgo financiero, lo cual es coherente con trabajos como Whaley (2009), que caracterizan al VIX como un indicador altamente exógeno a otros mercados.
-
-### Respuestas propias
-
-Tanto $\Delta VIX$ como $\Delta Brent$ muestran una reacción intensa en el primer mes y luego convergen rápidamente, lo cual es típico de series altamente volátiles como las financieras y las energéticas (Elder & Serletis, 2010).
+El panel correspondiente muestra que los shocks en el precio del petróleo generan una reacción casi nula en ∆VIX, con bandas de confianza que incluyen cero desde el primer periodo. Esto sugiere que las variaciones inesperadas del petróleo no modifican de manera sustancial la percepción de riesgo financiero, lo cual es coherente con trabajos como Whaley (2009), que caracterizan al VIX como un indicador altamente exógeno a otros mercados.
 
 ## Descomposición de Varianza (FEVD)
 
@@ -400,58 +460,60 @@ La FEVD complementa el análisis mostrando qué proporción de la variación fut
 
 Para $\Delta VIX$
 
--   Prácticamente 100% de su variación responde a shocks propios.
+-   Prácticamente **100%** de su variación responde a shocks propios.
 
--   El petróleo aporta una fracción despreciable.
+-   El petróleo aporta una fracción insignificante o cercana a cero.
 
 Esto confirma la naturaleza exógena del VIX, señalada por Whaley (2009).
 
 Para $\Delta Brent$
 
--   En el corto plazo, los shocks del VIX explican alrededor de 11% de la variabilidad del petróleo.
+-   En el corto plazo, los shocks del VIX explican alrededor de **11%** de la variabilidad del petróleo.
 
--   En horizontes de 2 a 10 meses, la proporción atribuible al VIX fluctúa entre 10% y 15%, sin volverse dominante.
+-   En horizontes de 2 a 10 meses, la proporción atribuible al VIX fluctúa entre **10% y 15%**, sin volverse dominante.
 
 -   La mayor parte de la varianza del petróleo sigue explicada por shocks propios.
 
 Este resultado es consistente con estudios que encuentran que variables financieras afectan al petróleo, pero lo hacen con efectos moderados y transitorios (Baumeister & Kilian, 2016).
 
-## Conclusión general de los resultados empíricos
+![Elaboración propia, Descomposición de la varianza.](images/varianza.png){width="300" height="300"}
+
+## Resumen de resultados
 
 Los resultados permiten responder con claridad la pregunta de investigación:
 
-Los shocks en la volatilidad financiera (medida por el VIX) sí afectan el precio del petróleo Brent, pero este efecto es moderado, significativo únicamente en el corto plazo y se disipa en el transcurso de 2 a 3 meses.
+Los shocks en la volatilidad financiera (medida por el VIX) sí afectan el precio del petróleo Brent, pero este efecto es moderado, pero significativo únicamente en el corto plazo y se disipa en el transcurso de 2 a 3 meses.
 
 El análisis muestra que:
 
 1.  El impacto inicial es claramente negativo y estadísticamente significativo.
 2.  No existe persistencia del shock más allá del corto plazo.
-3.  El VIX explica una parte modesta de la variabilidad del petróleo (10–15%).
+3.  El VIX explica una parte considerable de la variabilidad del petróleo (10–15%).
 4.  El petróleo está determinado principalmente por shocks propios, consistentes con su compleja dinámica interna.
 
 Estos resultados se alinean con la literatura que destaca que la transmisión de volatilidad financiera hacia el petróleo existe, pero depende del horizonte temporal y del contexto, y normalmente requiere modelos más amplios (incluyendo actividad económica global o inventarios) para capturar efectos más persistentes (Kilian & Murphy, 2014; Baumeister & Kilian, 2016).
 
 # Conclusiones
 
--   El análisis dinámico realizado mediante el modelo VAR bivariado con identificación de Cholesky revela que un shock positivo e inesperado de una desviación estándar en el VIX (volatilidad financiera) induce una caída inmediata y estadísticamente significativa en las variaciones del precio del Brent (∆Brent). Esta caída inicial se cuantifica cerca de 2 dólares por barril. Este efecto negativo es de naturaleza transitoria, disipándose gradualmente y volviéndose no significativo a partir del tercer mes, convergiendo a cero en un horizonte de diez meses. Este patrón valida la hipótesis de que el aumento de la incertidumbre financiera ejerce una presión bajista sobre el precio del petróleo.
+-   El análisis dinámico realizado mediante el modelo VAR bivariado con identificación de Cholesky revela que un shock positivo e inesperado de una desviación estándar en el VIX (volatilidad financiera) induce una caída inmediata y estadísticamente significativa en las variaciones del precio del Brent (∆Brent). Esta caída inicial se cuantifica cerca de USD 2.00 por barril. Este efecto negativo es de naturaleza transitoria, disipándose gradualmente y volviéndose no significativo entre el segundo y tercer mes, convergiendo a cero en un horizonte de diez meses. Este patrón valida la hipótesis de que el aumento de la incertidumbre financiera ejerce una presión a la baja sobre el precio del petróleo.
 
--   Respecto a la dinámica interna y la causalidad inversa, se confirma una marcada asimetría en la transmisión de shocks entre los dos mercados. La descomposición de varianza para el VIX muestra que casi el 100% de su variación proviene de shocks propios. De manera recíproca, un shock en el precio del petróleo (∆Brent) no presenta un impacto estadísticamente significativo sobre la dinámica del VIX. Esta evidencia soporta la conclusión de que la influencia del petróleo sobre la volatilidad financiera es prácticamente inexistente.
+-   Respecto a la dinámica interna y la causalidad inversa, se confirma una marcada asimetría en la transmisión de shocks entre los dos mercados. La descomposición de varianza para el VIX muestra que casi el 100% de su variación proviene de shocks propios. De manera recíproca, un shock en el precio del petróleo (∆Brent) no presenta un impacto estadísticamente significativo sobre la dinámica del VIX. Esta evidencia apoya la conclusión de que la influencia del petróleo sobre la volatilidad financiera es prácticamente inexistente.
 
--   La descomposición de varianza (FEVD) complementa estos hallazgos al cuantificar la contribución del VIX a la variabilidad del precio del petróleo. Los resultados indican que el VIX explica una contribución moderada de la variabilidad del Brent, manteniéndose entre el 10% y el 15% en un horizonte de diez meses. Aunque significativa, esta contribución no es dominante, pues la mayor parte del comportamiento del Brent proviene de shocks propios (factores internos del mercado petrolero). En resumen, la volatilidad financiera influye en el precio del petróleo, pero lo hace de manera moderada y nunca como el factor predominante.
+-   La descomposición de varianza (FEVD) complementa estos hallazgos al cuantificar la contribución del VIX a la variabilidad del precio del petróleo. Los resultados indican que el VIX explica una contribución moderada de la variabilidad del Brent, manteniéndose entre el 10% y el 15% en un horizonte de diez meses. Además, la mayor parte del comportamiento del Brent proviene de shocks propios (factores internos del mercado petrolero). En resumen, la volatilidad financiera influye en el precio del petróleo, pero lo hace de manera moderada y nunca como el factor predominante.
 
 # Limitaciones y Recomendaciones del Proyecto
 
 ## Limitaciones
 
-El presente estudio tiene varias limitaciones que deben tomarse en cuenta al interpretar los resultados. En primer lugar, el modelo utilizado es bivariado y considera únicamente las variaciones del VIX y del precio del petróleo Brent. Si bien esto permite aislar el efecto directo de la volatilidad financiera, deja fuera otros determinantes relevantes del mercado petrolero, como la actividad económica global, los inventarios de crudo, la oferta y demanda internacional o factores geopolíticos que suelen influir significativamente en su comportamiento. Además, el uso de primeras diferencias, aunque necesario para garantizar estacionariedad, limita la posibilidad de identificar relaciones de largo plazo que podrían emerger en un modelo más amplio.
+El presente estudio tiene varias limitaciones que deben tomarse en cuenta al interpretar los resultados. En primer lugar, el modelo utilizado es bivariado y considera únicamente las variaciones del VIX y del precio del petróleo Brent. Si bien esto permite aislar el efecto directo de la volatilidad financiera, deja fuera otros determinantes relevantes del mercado petrolero, como la actividad económica global, los inventarios de petróleo, la oferta y demanda internacional o factores geopolíticos que podrían influir en su comportamiento. Además, el uso de primeras diferencias, aunque necesario para garantizar estacionariedad, limita la posibilidad de identificar relaciones de largo plazo que podrían surgir en un modelo más amplio.
 
-Asimismo, las características propias de los datos financieros representan una restricción adicional. Los residuos del modelo presentan heterocedasticidad y no normalidad, algo común en series como el VIX y los precios del petróleo, pero que puede reducir la precisión de ciertos contrastes estadísticos. Finalmente, la identificación estructural mediante la descomposición de Cholesky se basa en un ordenamiento que supone que el efecto contemporáneo fluye desde el VIX hacia el Brent, un supuesto razonable pero que podría ser revisado utilizando métodos alternativos de identificación.
+Asimismo, las características propias de los datos financieros representan una restricción adicional. Los residuos del modelo presentan heterocedasticidad y no normalidad, algo común en series financieras, pero que puede reducir la precisión de ciertos contrastes estadísticos. Finalmente, la identificación estructural mediante la descomposición de Cholesky se basa en un ordenamiento que supone que el efecto contemporáneo fluye desde el VIX hacia el Brent, un supuesto razonable pero que podría ser revisado utilizando métodos alternativos de identificación.
 
 ## Recomendaciones
 
-En cuanto a las recomendaciones, una ampliación natural del estudio sería incorporar variables adicionales que permitan capturar mejor los factores estructurales que influyen en el mercado petrolero. La inclusión de indicadores de actividad económica, inventarios energéticos, tasas de interés, tipo de cambio u otros shocks reales podría enriquecer significativamente el análisis. También sería conveniente explorar métodos alternativos de identificación estructural, como SVAR con restricciones asignadas o identificaciones basadas en heterocedasticidad, para evaluar la robustez de los resultados.
+En cuanto a las recomendaciones, una ampliación del estudio podría incorporar variables adicionales que permitan capturar mejor los factores estructurales que influyen en el mercado petrolero. La inclusión de indicadores de actividad económica, inventarios energéticos, tasas de interés, tipo de cambio u otros shocks reales podría enriquecer el análisis. También sería conveniente explorar métodos alternativos de identificación estructural.
 
-Asimismo, modelos que permitan capturar la naturaleza cambiante de la volatilidad, como VAR-GARCH, TVP-VAR o modelos con cambio de régimen, podrían ofrecer una visión más precisa del comportamiento conjunto entre volatilidad financiera y precios energéticos, especialmente en periodos de crisis. Finalmente, futuras investigaciones podrían analizar subperiodos específicos o episodios de alta tensión financiera para determinar si la relación entre el VIX y el petróleo se intensifica bajo condiciones extremas, y evaluar si existe o no una relación de largo plazo mediante enfoques de cointegración cuando se trabajen modelos multivariados.
+Asimismo, modelos que permitan capturar la naturaleza cambiante de la volatilidad, como por ejemplo modelos de tipo VAR-GARCH, podrían ofrecer una visión más precisa del comportamiento conjunto entre volatilidad financiera y precios energéticos, especialmente en periodos de crisis. Finalmente, futuras investigaciones podrían analizar si existe o no una relación de largo plazo entre el VIX y el petróleo mediante enfoques de cointegración cuando se trabajan modelos multivariados.
 
 # REFERENCIAS
 
@@ -470,6 +532,8 @@ Kilian, L., & Lütkepohl, H. (2017). Structural Vector Autoregressive Analysis. 
 Kilian, L., & Murphy, D. (2014). The role of inventories and speculative trading in the global market for crude oil. Journal of Applied Econometrics, 29(3), 454–478.
 
 Lütkepohl, H. (2005). New Introduction to Multiple Time Series Analysis. Springer.
+
+Sadorsky, P. (1999). Oil price shocks and stock market activity. Energy Economics, 21(5), 449–469.
 
 Sims, C. A. (1980). Macroeconomics and reality. Econometrica, 48(1), 1–48.
 
