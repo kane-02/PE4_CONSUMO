@@ -9,6 +9,7 @@ author:
 
 format:
   pdf:
+    toc: true
     tbl-cap-location: top
     toc-depth: 2
     number-sections: true
@@ -58,7 +59,7 @@ format:
     sec-depth: 3
 
 abstract: |
-  Esta investigación analiza el efecto de los shocks en la volatilidad implícita del mercado bursátil estadounidense —medida por el Índice de Volatilidad (VIX)— sobre la dinámica del precio del petróleo Brent, mediante un modelo de Vectores Autorregresivos (VAR) estructural. El objetivo es cuantificar la magnitud, dirección y persistencia de la transmisión entre ambos mercados, particularmente en períodos de estrés financiero. La metodología utiliza un VAR bivariado con identificación recursiva vía descomposición de Cholesky, ordenando el VIX antes que el petróleo bajo el supuesto de que la volatilidad financiera afecta contemporáneamente al crudo, pero no a la inversa. Los resultados muestran que un shock positivo de una desviación estándar en el VIX induce una caída inmediata y significativa de aproximadamente 2% en el precio del Brent durante el primer mes, efecto que se disipa gradualmente a lo largo de diez meses. En contraste, un shock en el petróleo no presenta un impacto estadísticamente significativo sobre el VIX, confirmando la asimetría en la transmisión. La descomposición de varianza revela que el VIX explica hasta el 14.9% de la variación del precio del petróleo en horizontes de diez meses. Estos hallazgos sugieren que el VIX puede funcionar como un indicador adelantado para anticipar movimientos en el mercado petrolero, con implicaciones para la gestión de riesgos y el diseño de políticas en economías dependientes de hidrocarburos.
+  Esta investigación analiza el efecto de los shocks en la volatilidad implícita del mercado bursátil estadounidense, medida por el Índice de Volatilidad del Mercado de Opciones del S&P 500 (VIX), sobre la dinámica del precio del petróleo Brent, mediante un modelo de Vectores Autorregresivos (VAR) estructural. El objetivo es cuantificar la magnitud, dirección y persistencia de la transmisión entre ambos mercados, particularmente en períodos que incluyen sucesos de estrés financiero. La metodología utiliza un VAR bivariado con identificación de tipo descomposición de Cholesky, ordenando el VIX antes que el petróleo bajo el supuesto de que la volatilidad financiera afecta contemporáneamente al petróleo, pero no a la inversa. Los resultados muestran que un shock positivo de 1 unidad en el VIX induce una caída inmediata y significativa de aproximadamente USD 2.00 por barril en el precio del Brent, efecto cuya significancia estadística abarca 2 meses, disipándose gradualmente hasta su valor estacionario. En contraste, un shock en el petróleo no presenta un impacto estadísticamente significativo sobre el VIX, confirmando la asimetría en la transmisión. La descomposición de varianza revela que el VIX explica hasta el 14.9% de la variación del precio del petróleo en un horizonte de hasta diez meses. Estos hallazgos sugieren que el VIX puede funcionar como un indicador adelantado para anticipar movimientos en el mercado petrolero.
 editor: visual
 ---
 
@@ -76,7 +77,7 @@ Con base en lo anterior, este estudio se propone analizar el impacto dinámico q
 
 La pregunta central que busca responder este análisis es la siguiente:
 
-***¿En qué medida los shocks en la volatilidad financiera (VIX) afectan la dinámica del precio del petróleo Brent?***
+***¿En qué medida los shocks en la volatilidad financiera afectan la dinámica del precio del petróleo Brent?***
 
 Para responder la pregunta, se estudian las funciones de impulso-respuesta (IRF), que describen la trayectoria temporal del precio del petróleo ante un shock estructural en el VIX, así como la descomposición de varianza (FEVD), que muestra la proporción de la variabilidad del Brent explicada por shocks financieros a distintos horizontes.
 
@@ -84,7 +85,7 @@ Los resultados de este trabajo permiten evaluar si el VIX actúa como un determi
 
 # MARCO TEÓRICO Y REVISIÓN DE LITERATURA
 
-## Volatilidad financiera y el Índice VIX
+## Volatilidad financiera y el VIX
 
 La volatilidad financiera representa el grado de incertidumbre asociada al comportamiento futuro de los mercados de activos. En particular, el VIX se ha convertido en la medida estándar de dicha incertidumbre. El VIX se calcula a partir de los precios de opciones del S&P 500 y refleja la volatilidad implícita esperada para los próximos 30 días (Whaley, 2009). Debido a su interpretación como “índice del miedo”, incrementos en el VIX suelen asociarse con episodios de aversión al riesgo, fuga de capitales a activos de menor riesgo y tensiones financieras globales.
 
@@ -98,13 +99,7 @@ En ese sentido, periodos de incertidumbre en los mercados financieros, de caída
 
 ## Transmisión de volatilidad entre mercados financieros y de commodities
 
-La interconexión entre mercados financieros y de commodities ha sido ampliamente documentada. Un incremento en la volatilidad financiera puede transmitirse al mercado petrolero a través de múltiples canales:
-
-1.  Canal de expectativas macroeconómicas: Mayores niveles de incertidumbre elevan la probabilidad percibida de desaceleración económica, reduciendo la demanda esperada de petróleo.
-2.  Canal de liquidez y portafolios: Los inversionistas reequilibran sus portafolios alejándose de activos riesgosos, lo que puede disminuir su exposición a commodities energéticos.
-3.  Canal de prima por riesgo: La volatilidad financiera incrementa las primas requeridas por riesgo, afectando los precios de activos sensibles al ciclo económico.
-
-Estudios empíricos han mostrado que los shocks del VIX generan respuestas significativas en la volatilidad y el nivel de los precios del petróleo (Elder & Serletis, 2010; Baumeister & Kilian, 2016). La evidencia sugiere que tales efectos suelen ser más fuertes en episodios de estrés financiero.
+La interconexión entre los mercados financieros y los mercados de commodities ha sido ampliamente documentada en la literatura. Diversos estudios muestran que un aumento en la volatilidad financiera puede transmitirse al mercado petrolero mediante distintos mecanismos. En primer lugar, a través del ***canal de expectativas macroeconómicas***, donde mayores niveles de incertidumbre elevan la probabilidad percibida de desaceleración económica, reduciendo la demanda esperada de petróleo (Bloom, 2009; Hamilton, 2009). En segundo lugar, mediante el ***canal de liquidez y reequilibrio de portafolios***, ya que los inversionistas tienden a reducir su exposición a activos riesgosos durante episodios de tensión financiera, lo que puede disminuir la negociación y presión de demanda en mercados de commodities energéticos (Bekaert et al., 2013; Kang & Ratti, 2013). Finalmente, a través del ***canal de primas por riesgo***, donde la mayor volatilidad financiera incrementa las compensaciones exigidas por los inversionistas para mantener activos sensibles al ciclo económico, afectando directamente sus precios y su dinámica de corto plazo (Baumeister & Kilian, 2016).
 
 ## Modelos VAR para el análisis dinámico de relaciones entre variables
 
@@ -134,7 +129,11 @@ Las variables seleccionadas son:
 
 1.  **Índice de Volatilidad Financiera (VIX)**
 
-    -   Código: **VIXCLS** Frecuencia original: diaria Unidad de medida: índice de volatilidad implícita esperada del S&P 500 a 30 días.
+    -   Código: **VIXCLS**
+
+    -   Frecuencia original: diaria
+
+    -   Unidad de medida: índice de volatilidad implícita esperada del S&P 500 a 30 días.
 
     -   Relevancia: el VIX es reconocido como el principal indicador de incertidumbre financiera global (Whaley, 2009) y es comúnmente utilizado en análisis de transmisión de shocks hacia mercados petroleros (Kang & Ratti, 2013).\
 
@@ -176,41 +175,37 @@ $$
 
 Para analizar cómo se influyen mutuamente la volatilidad financiera y el precio del petróleo a lo largo del tiempo, se estimó un **Modelo Autorregresivo Vectorial (VAR)** bivariado. Este enfoque, propuesto por Sims (1980), es ideal cuando se desea estudiar interrelaciones dinámicas sin imponer restricciones estructurales muy fuertes desde el inicio.
 
-donde la forma estructural es:
+Donde la forma estructural es:
 
 $$
 DVIX_{t} = b_{10}-b_{12}DBrent_t +\gamma_{11} DVIX_{t-1} +  \gamma_{12} DVIX_{t-2}\;+\;...\;+\;\gamma_{1p} DVIX_{t-p} + \epsilon_{1t} 
 $$
 
-$$ DBrent_{t} = b_{20}-b_{21}DVIX_t +\gamma_{21} DBrent_{t-1} +  \gamma_{22} DBrent_{t-2}\;+\;...\;+\;\gamma_{2p} DBrent_{t-p}+\epsilon_{2t}    $$
+$$ 
+DBrent_{t} = b_{20}-b_{21}DVIX_t +\gamma_{21} DBrent_{t-1} +  \gamma_{22} DBrent_{t-2}\;+\;...\;+\;\gamma_{2p} DBrent_{t-p}+\epsilon_{2t}    
+$$
 
 En su forma matricial:
 
 $$
-\begin{pmatrix}1 & b_{12} \\b_{21} & 1\end{pmatrix}\begin{pmatrix}\Delta VIX_t \\\Delta Brent_t\end{pmatrix}=\begin{pmatrix}b_{10} \\b_{20}\end{pmatrix}+\begin{pmatrix}\gamma_{11} & \gamma_{12} \\\gamma_{21} & \gamma_{22}\end{pmatrix}\begin{pmatrix}\Delta VIX_{t-1} \\\Delta Brent_{t-1}\end{pmatrix}+\begin{pmatrix}\gamma_{11} & \gamma_{12} \\\gamma_{21} & \gamma_{22}\end{pmatrix}\begin{pmatrix}\Delta VIX_{t-2} \\\Delta Brent_{t-2}\end{pmatrix}+\begin{pmatrix}\epsilon_{1t} \\\epsilon_{2t}\end{pmatrix}
+\begin{pmatrix}1 & b_{12} \\b_{21} & 1\end{pmatrix}\begin{pmatrix}DVIX_t \\DBrent_t\end{pmatrix}=\begin{pmatrix}b_{10} \\b_{20}\end{pmatrix}+\begin{pmatrix}\gamma_{11} & \gamma_{12} \\\gamma_{21} & \gamma_{22}\end{pmatrix}\begin{pmatrix}DVIX_{t-1} \\DBrent_{t-1}\end{pmatrix}+...+\begin{pmatrix}\gamma_{1p-1} & \gamma_{1p} \\\gamma_{2p-1} & \gamma_{2p}\end{pmatrix}\begin{pmatrix}DVIX_{t-p} \\DBrent_{t-p}\end{pmatrix}+\begin{pmatrix}\epsilon_{1t} \\\epsilon_{2t}\end{pmatrix}
 $$
 
 En su forma reducida:
 
 $$
-B Y_t =\Gamma_{0}+\Gamma_{1}Y_{t-1} +\Gamma_{2}Y_{t-2}+ \epsilon_t
+B Y_t =\Gamma_{0}+\Gamma_{1}Y_{t-1} +...+\Gamma_{p}Y_{t-p}+ \epsilon_t
 $$ $$
-Y_t =B^{-1}\Gamma_{0}+B^{-1}\Gamma_{1}Y_{t-1} +B^{-1}\Gamma_{2}Y_{t-2}+ B^{-1}\epsilon_t
+Y_t =B^{-1}\Gamma_{0}+B^{-1}\Gamma_{1}Y_{t-1} +...+B^{-1}\Gamma_{p}Y_{t-p}+ B^{-1}\epsilon_t
 $$ $$
-Y_t =A_{0}+A_{1}Y_{t-1} +A_{2}Y_{t-2}+ e_t
+Y_t =A_{0}+A_{1}Y_{t-1} +...+A_{p}Y_{t-p}+ e_t
 $$ donde:
 
 $$
-Y_t = \begin{pmatrix}  \text{DVIX}_t \\ \text{DBrent}_t \end{pmatrix}, \quad e_t = \begin{pmatrix} e_{1t} \\ e_{2t} \end{pmatrix}, \quad 
+Y_t = \begin{pmatrix}  \text{DVIX}_t \\ \text{DBrent}_t \end{pmatrix}, \quad e_t = \begin{pmatrix} e_{1t} \\ e_{2t} \end{pmatrix} \quad 
 $$
 
 Las matrices $A_i$ contienen los coeficientes de rezago que reflejan cómo cada variable depende de su propio rezago y de los rezagos de las demás variables. El vector $c$ incluye términos constantes y términos determinísticos, y $e_t$ representa los errores de la forma reducida.
-
-La forma que utilizaremos para ajustar el modelo es la siguiente: $$
-DVIX_{t} = a_{10} + a_{11} DVIX_{t-1}+ a_{12} DBrent_{t-1} + a_{13} DVIX_{t-2}+ a_{14} DBrent_{t-2} + e_{1t}
-$$ $$
-DBrent_{t} = a_{20} + a_{21} DVIX_{t-1}+ a_{22} DBrent_{t-1} + a_{23} DVIX_{t-2}+ a_{24} DBrent_{t-2} + e_{2t}
-$$
 
 ## Identificación estructural mediante descomposición de Cholesky
 
@@ -222,7 +217,15 @@ $$
 \Delta \text{VIX}_t \longrightarrow \Delta \text{Brent}_t
 $$
 
-Para la identificación estructural del modelo se adoptó un ordenamiento de Cholesky en el cual el VIX aparece primero y el precio del petróleo Brent en segundo lugar. Este orden supone que los shocks de volatilidad financiera pueden afectar contemporáneamente las variaciones del precio del petróleo, pero no a la inversa: el Brent no influye sobre el VIX dentro del mismo mes, aunque sí puede hacerlo con rezago. Restricciones:
+Para la identificación estructural del modelo se adoptó un ordenamiento de Cholesky en el cual el VIX aparece primero y el precio del petróleo Brent en segundo lugar. Este orden supone que los shocks de volatilidad financiera pueden afectar contemporáneamente las variaciones del precio del petróleo, pero no a la inversa: el Brent no influye sobre el VIX dentro del mismo mes, aunque sí puede hacerlo con rezago.
+
+Numero de restricciones según Choleskya para $n=2$ :
+
+$$
+No. Restricciones = \frac{n^2-n}{2} = \frac{2^2-2}{2}=1 
+$$
+
+Imponiendo la restricción anterior según el ordenamiento de las variables:
 
 $$
 B = \begin{pmatrix}1 & 0 \\b_{21} & 1\end{pmatrix}
@@ -234,7 +237,7 @@ $$
 B^{-1} = \frac{1}{1} \begin{pmatrix}1 & 0 \\-b_{21} & 1\end{pmatrix}
 $$
 
-Se aplicara al error reducido:
+Se aplicara al error reducido para analizar los shock estructurales del modelo:
 
 $$
 e_t = B^{-1} \epsilon_t,
@@ -255,7 +258,8 @@ Una vez estimado y correctamente identificado el modelo, se aplican dos herramie
 1.  **Funciones de Impulso-Respuesta (IRF)\
     **Permiten observar cómo reacciona el precio del petróleo ante un shock inesperado en la volatilidad financiera, es decir, muestran la trayectoria que sigue el Brent después de un aumento inesperado en el VIX.
 
-2.  **Descomposición de Varianza del Error de Pronóstico (FEVD)**Indica qué proporción de la variabilidad futura del Brent se debe a shocks en el VIX. Esta medida ayuda a cuantificar cuánta importancia tiene realmente la volatilidad financiera en la dinámica del precio del petróleo.
+2.  **Descomposición de Varianza del Error de Pronóstico (FEVD)\
+    **Indica qué proporción de la variabilidad futura del Brent se debe a shocks en el VIX. Esta medida ayuda a cuantificar cuánta importancia tiene realmente la volatilidad financiera en la dinámica del precio del petróleo
 
 ## Pruebas de diagnóstico del VAR
 
@@ -271,7 +275,7 @@ Antes de interpretar los resultados, se aplican pruebas estándar para validar e
 
 # RESULTADOS
 
-Esta sección presenta los principales hallazgos derivados de la estimación de un modelo VAR(2) que examina la interacción entre las variaciones del índice de volatilidad financiera (∆VIX) y las variaciones del precio del petróleo Brent (∆Brent). Se evalúan los supuestos del modelo, su estabilidad, la relación dinámica entre las variables y los efectos de los shocks estructurales usando funciones de impulso-respuesta (IRF) y descomposición de varianza (FEVD). El propósito es determinar en qué medida la volatilidad financiera influye en la dinámica del petróleo.
+Esta sección presenta los principales hallazgos derivados de la estimación de un modelo VAR(2) que examina la interacción entre las variaciones del índice de volatilidad financiera (DVIX) y las variaciones del precio del petróleo Brent (DBrent). Se evalúan los supuestos del modelo, su estabilidad, la relación dinámica entre las variables y los efectos de los shocks estructurales usando funciones de impulso-respuesta (IRF) y descomposición de varianza (FEVD). El propósito es determinar en qué medida la volatilidad financiera influye en la dinámica del petróleo.
 
 ## Selección del modelo y del número de rezagos
 
@@ -289,9 +293,6 @@ Cabe mencionar que la elección de dos rezagos es consistente con la dinámica d
 | 3   | 12.19    | 12.43   | 12.29   |
 | 4   | 12.19    | 12.50   | 12.32   |
 | 5   | 12.20    | 12.57   | 12.35   |
-| 6   | 12.21    | 12.65   | 12.39   |
-| 7   | 12.23    | 12.75   | 12.45   |
-| 8   | 12.27    | 12.85   | 12.51   |
 
 : Elaboración propia, Análisis de criterios de información {#tbl-datos}
 
@@ -299,6 +300,28 @@ Cabe mencionar que la elección de dos rezagos es consistente con la dinámica d
 |----------------------------------------------|
 | \* Criterio de información AIC               |
 | indica que podemos utilizar un modelo VAR(2) |
+
+Por lo tanto por medio de descomposición de Cholesky y la selección del numero de rezagos óptimos el modelo VAR(2) restringido resulta de la siguiente forma:
+
+En su forma matricial:
+
+$$ \begin{pmatrix}1 & 0 \\b_{21} & 1\end{pmatrix}\begin{pmatrix}DVIX_t \\D Brent_t\end{pmatrix}=\begin{pmatrix}b_{10} \\b_{20}\end{pmatrix}+\begin{pmatrix}\gamma_{11} & \gamma_{12} \\\gamma_{21} & \gamma_{22}\end{pmatrix}\begin{pmatrix}DVIX_{t-1} \\DBrent_{t-1}\end{pmatrix}+\begin{pmatrix}\gamma_{13} & \gamma_{14} \\\gamma_{23} & \gamma_{24}\end{pmatrix}\begin{pmatrix}DVIX_{t-2} \\DBrent_{t-2}\end{pmatrix}+\begin{pmatrix}\epsilon_{1t} \\\epsilon_{2t}\end{pmatrix} $$
+
+y para alcanzar su forma reducida operamos de la siguiente forma:
+
+$$
+B Y_t =\Gamma_{0}+\Gamma_{1}Y_{t-1} +\Gamma_{2}Y_{t-2}+ \epsilon_t
+$$
+
+$$ Y_t =B^{-1}\Gamma_{0}+B^{-1}\Gamma_{1}Y_{t-1} +B^{-1}\Gamma_{2}Y_{t-2}+ B^{-1}\epsilon_t $$ $$ Y_t =A_{0}+A_{1}Y_{t-1} +A_{2}Y_{t-2}+ e_t $$ donde:
+
+$$ Y_t = \begin{pmatrix}  \text{DVIX}_t \\ \text{DBrent}_t \end{pmatrix}, \quad e_t = \begin{pmatrix} e_{1t} \\ e_{2t} \end{pmatrix},\quad B^{-1} = \frac{1}{1} \begin{pmatrix}1 & 0 \\-b_{21} & 1\end{pmatrix}  $$
+
+La forma que utilizaremos para ajustar el modelo es la siguiente: $$
+DVIX_{t} = a_{10} + a_{11} DVIX_{t-1}+ a_{12} DBrent_{t-1} + a_{13} DVIX_{t-2}+ a_{14} DBrent_{t-2} + e_{1t}
+$$ $$
+DBrent_{t} = a_{20} + a_{21} DVIX_{t-1}+ a_{22} DBrent_{t-1} + a_{23} DVIX_{t-2}+ a_{24} DBrent_{t-2} + e_{2t}
+$$
 
 ## Verificación de supuestos del modelo
 
