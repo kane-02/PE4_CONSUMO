@@ -144,7 +144,7 @@ Las variables seleccionadas son:
 
     -   Unidad de medida: USD por barril
 
-    -   Serie disponible: Relevancia: referencia mundial del petróleo y variable clave para medir condiciones energéticas globales (Hamilton, 2009).
+    -   Relevancia: referencia mundial del petróleo y variable clave para medir condiciones energéticas globales (Hamilton, 2009).
 
 Ambas series se publican originalmente con frecuencia diaria, pero para efectos del análisis se convirtieron a **frecuencia mensual**, calculando el promedio de cada mes. Esta transformación es común porque suaviza movimientos extremadamente volátiles del día a día sin perder la tendencia principal ni la información relevante para un análisis macroeconómico (Kilian & Murphy, 2014).
 
@@ -161,7 +161,7 @@ $$
 $$
 
 $$
-    \Delta Brentt =Brent_t-Brent_{t-1}
+    \Delta Brent_t =Brent_t-Brent_{t-1}
 $$
 
 -   $\Delta VIX$ se interpreta como un cambio absoluto en puntos del índice.
@@ -206,7 +206,7 @@ $$
 
 Las matrices $A_i$ contienen los coeficientes de rezago que reflejan cómo cada variable depende de su propio rezago y de los rezagos de las demás variables. El vector $c$ incluye términos constantes y términos determinísticos, y $e_t$ representa los errores de la forma reducida.
 
-La forma que utilizaremos para ajustar es la siguiente: $$
+La forma que utilizaremos para ajustar el modelo es la siguiente: $$
 DVIX_{t} = a_{10} + a_{11} DVIX_{t-1}+ a_{12} DBrent_{t-1} + a_{13} DVIX_{t-2}+ a_{14} DBrent_{t-2} + e_{1t}
 $$ $$
 DBrent_{t} = a_{20} + a_{21} DVIX_{t-1}+ a_{22} DBrent_{t-1} + a_{23} DVIX_{t-2}+ a_{24} DBrent_{t-2} + e_{2t}
@@ -281,23 +281,23 @@ Además, al contar con un tamaño de muestra suficientemente grande (180 observa
 
 Cabe mencionar que la elección de dos rezagos es consistente con la dinámica de series financieras y de commodities, cuyos ajustes ocurren de forma rápida pero no instantánea (Sims, 1980; Kilian & Murphy, 2014).
 
-| LAG | AIC      |      SC |   HQ    |
-|-----|---------|--------|-------|
-| 0   | 12.28    |   12.31 |  12.29  |
-| 1   | 12.20    | 12.31\* |  12.25  |
-| 2   | 12.17 \* |   12.34 | 12.25\* |
-| 3   | 12.19    |   12.43 |  12.29  |
-| 4   | 12.19    |   12.50 |  12.32  |
-| 5   | 12.20    |   12.57 |  12.35  |
-| 6   | 12.21    |   12.65 |  12.39  |
-| 7   | 12.23    |   12.75 |  12.45  |
-| 8   | 12.27    |   12.85 |  12.51  |
+| LAG | AIC      | SC      | HQ      |
+|-----|----------|---------|---------|
+| 0   | 12.28    | 12.31   | 12.29   |
+| 1   | 12.20    | 12.31\* | 12.25   |
+| 2   | 12.17 \* | 12.34   | 12.25\* |
+| 3   | 12.19    | 12.43   | 12.29   |
+| 4   | 12.19    | 12.50   | 12.32   |
+| 5   | 12.20    | 12.57   | 12.35   |
+| 6   | 12.21    | 12.65   | 12.39   |
+| 7   | 12.23    | 12.75   | 12.45   |
+| 8   | 12.27    | 12.85   | 12.51   |
 
 : Elaboración propia, Análisis de criterios de información {#tbl-datos}
 
-|                Especificación                |
-|--------------------------------------------|
-|        \* Criterio de información AIC        |
+| Especificación                               |
+|----------------------------------------------|
+| \* Criterio de información AIC               |
 | indica que podemos utilizar un modelo VAR(2) |
 
 ## Verificación de supuestos del modelo
@@ -340,11 +340,11 @@ La ausencia de autocorrelación es uno de los criterios centrales para validar u
 
 : Elaboración propia, Prueba LM - Breusch-Godfrey {#tbl-datos}
 
-|                Especificación                |
-|:--------------------------------------------:|
+| Especificación                               |
+|----------------------------------------------|
 | \*\*\* NO se rechaza al 10% de significancia |
-|  \*\* NO se rechaza al 5% de significancia   |
-|   \* NO se rechaza al 1% de significancia    |
+| \*\* NO se rechaza al 5% de significancia    |
+| \* NO se rechaza al 1% de significancia      |
 
 ### Normalidad y heterocedasticidad
 
@@ -431,6 +431,35 @@ Con esto, el modelo se considera adecuado para examinar la dinámica entre la vo
 ## Análisis de Impulso-Respuesta (IRF)
 
 Las IRF permiten observar cómo reacciona cada variable ante un shock inesperado en la otra. Estos gráficos son fundamentales para responder la pregunta de investigación: ¿En qué medida los shocks en la volatilidad financiera afectan la dinámica del precio del petróleo Brent?
+
+### Función Impulso-Respuesta
+
+$$
+  Función\;impulso -respuesta: \sum_{j=0}^{\infty} \phi(i)\epsilon_{i-j} 
+$$
+
+Donde:
+
+$$
+  \phi(i)=\begin{pmatrix}\phi_{11}(i) & \phi_{12}(i) \\\phi_{21}(i) & \phi_{22}(i)\end{pmatrix}, \quad \phi(0)=B^{-1}
+$$
+
+Ajustando obtenemos los siguientes resultados :
+
+| $i - Periodos$ | $\epsilon_{1t} \to DBrent$ | $\epsilon_{2t} \to DVIX$ |
+|----------------|----------------------------|--------------------------|
+| 1              | -1.99                      | 0.00                     |
+|                | (0.4175)                   | (0.000)                  |
+| 2              | -1.3021                    | -0.3683                  |
+|                | (0.4393)                   | (0.3282)                 |
+| 3              | 0.003                      | 0.2093                   |
+|                | (0.44162)                  | (0.3147)                 |
+| 4              | 0.3661                     | 0.131                    |
+|                | (0.1928)                   | (0.1159)                 |
+| 5              | 0.0654                     | -0.062                   |
+|                | (0.1495)                   | (0.093)                  |
+
+: Elaboración propia, Efecto de los shocks en DVIX {#tbl-datos}
 
 ### Impacto de un shock en ∆VIX sobre ∆Brent
 
